@@ -1,0 +1,48 @@
+<div class="container">
+  <form #addMecanicoForm="ngForm" autocomplete="off" (ngSubmit)="salvar(addMecanicoForm)">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>Gerenciamento de Mecânicos <i class="fa fa-briefcase" aria-hidden="true"></i></h1>
+        <hr><br>
+      </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <!-- #################### FORMULARIO DE CADASTRO #################### -->
+        <p-panel header="Cadastrar novo Mecânico">
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-8 ui-fluid">
+              <label>Nome</label>
+              <input type="text" pInputText name="nome" [(ngModel)]="mecanico.nome" #nome="ngModel" required
+                minlength="5" oninput="this.value = this.value.toUpperCase()">
+
+              <app-message [control]="nome" error="required" text="Informe o Nome completo"></app-message>
+            </div>
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+              <label>CPF</label>
+              <input pInputText name="cpf" [(ngModel)]="mecanico.cpf" #cpf="ngModel" required
+                [textMask]="{mask: cpfMask}">
+
+              <app-message [control]="cpf" error="required" text="Informe o CPF"></app-message>
+            </div>
+          </div>
+        </p-panel>
+      </div>
+      <div class="ui-g-12 ui-md-2 ui-fluid">
+        <button icon="fa fa-save" pButton label="Cadastrar"></button>
+      </div>
+    </div>
+  </form>
+
+  <!-- #################### TABELA DE MECÂNICOS #################### -->
+  <div class="ui-g" style="margin-top: 20px">
+    <div class="ui-g-12">
+      <p-dataTable [value]="mecanicos" emptyMessage="Nenhum mecânico encontrado." paginator="true" [rows]="7" #tabela>
+        <p-column styleClass="col-id" field="id" header="ID"></p-column>
+        <p-column field="nome" header="Nome"></p-column>
+        <p-column styleClass="col-num" field="cpf" header="CPF"></p-column>
+      </p-dataTable>
+    </div>
+  </div>
+</div>

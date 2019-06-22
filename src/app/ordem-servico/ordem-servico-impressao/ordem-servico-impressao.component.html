@@ -1,0 +1,67 @@
+<div class="container">
+  <app-cabecalho-impressao></app-cabecalho-impressao>
+
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h3>COMPROVANTE DE RECEBIMENTO DE EQUIPAMENTO</h3>
+      <hr><br>
+    </div>
+  </div>
+
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <label>Código da ordem de serviço: </label>{{ordemServico.codigo}}
+    </div>
+
+    <div class="ui-g-12">
+      <label>Cliente: </label>{{ordemServico.cliente.nome}}
+    </div>
+
+    <div class="ui-g-12">
+      <label>Telefone: </label>{{ordemServico.cliente.telefone}}
+    </div>
+
+    <div class="ui-g-12">
+      <label>Data de Entrada: </label>{{ ordemServico.dataEntrada | date:'dd/MM/yyyy' }}
+    </div>
+
+    <div class="ui-g-12">
+      <hr class="ui-widget-content" style="border-top:0">
+    </div>
+
+    <div class="ui-g-12">
+      <label>Dados do Equipamento</label>
+    </div>
+
+    <div class="ui-g-12">
+      <label>Número de Série: </label><span>{{ordemServico.equipamento.numeroSerie}}</span>
+    </div>
+
+    <div class="ui-g-12">
+      <label>Modelo: </label><span>{{ordemServico.equipamento.modelo}}</span>
+    </div>
+
+    <div class="ui-g-12">
+      <label>Fabricante: </label><span>{{ordemServico.equipamento.fabricante}}</span>
+    </div>
+
+    <div class="ui-g-12">
+      <label>Observação: </label><span>{{ordemServico.observacaoEquipamento}}</span>
+    </div>
+
+    <div class="ui-g-12">
+      <app-assinaturas></app-assinaturas>
+    </div>
+
+    <div class="ui-g-12 doNotPrint">
+      <hr><br>
+      <button pButton type="button" label="Imprimir" (click)="onPrint()" class="ui-button-rounded ui-button-success"
+        icon="fa fa-print"></button>
+      <a routerLink="/servicos">Ir para Listagem de Serviços</a>
+    </div>
+
+    <div class="ui-g-12">
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,8 @@
+.ui-messages-error {
+  background: rgb(253, 107, 107);
+  border: none;
+  margin:0;
+  margin-top:4px;
+  color: #fff;
+  border-radius: 3px;
+}

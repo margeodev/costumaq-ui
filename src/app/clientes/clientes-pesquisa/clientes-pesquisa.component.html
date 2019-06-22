@@ -1,0 +1,69 @@
+<div class="container">
+  <form #pesquisaClienteForm="ngForm" autocomplete="off" (ngSubmit)="pesquisar()">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>Pesquisar Cliente <i class="fa fa-search" aria-hidden="true"></i></h1>
+        <hr><br>
+      </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <!-- #################### FORMULARIO DE PEQUISA #################### -->
+        <p-panel header="Pesquisar por Nome ou CPF">
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-8 ui-fluid">
+              <label>Nome</label>
+              <input type="text" pInputText name="nome" [(ngModel)]="filtro.nome"
+                oninput="this.value = this.value.toUpperCase()">
+            </div>
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+              <label>CPF</label>
+              <input type="text" pInputText name="cpf" [textMask]="{mask: cpfMask}" [(ngModel)]="filtro.cpf">
+            </div>
+          </div>
+        </p-panel>
+      </div>
+      <div class="ui-g-12 ui-md-2 ui-fluid">
+        <button icon="fa fa-search" pButton label="Pesquisar"></button>
+      </div>
+    </div>
+  </form>
+
+  <!-- #################### TABELA DE CLIENTES #################### -->
+  <div class="ui-g" style="margin-top: 20px">
+    <div class="ui-g-12">
+      <p-dataTable [value]="clientes" emptyMessage="Nenhum cliente encontrado."
+        paginator="true"
+        [rows]="filtro.itensPorPagina"
+        [lazy]="true"
+        [totalRecords]="totalRegistros"
+        (onLazyLoad)="aoMudarPagina($event)"
+        #tabela>
+        <p-column styleClass="col-id" field="id" header="ID"></p-column>
+        <p-column field="nome" header="Nome"></p-column>
+        <p-column styleClass="col-num" field="telefone" header="Telefone"></p-column>
+        <p-column styleClass="col-num" field="whatsapp" header="Whatsapp"></p-column>
+        <p-column styleClass="col-num" field="cpf" header="CPF"></p-column>
+
+        <p-column styleClass="col-acoes">
+            <ng-template pTemplate="body" let-cli="rowData">
+              <a pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"
+                [routerLink]="['/clientes', cli.id]"></a>
+
+              <a pButton icon="fa-search" pTooltip="Detalhes" tooltipPosition="top"
+                [routerLink]="['/cliente-detalhes', cli.id]"></a>
+
+            </ng-template>
+        </p-column>
+
+        <p-footer>
+          <div class="ui-helper-clearfix" style="width:100%">
+            <a pButton icon="fa-plus" routerLink="/clientes/novo" style="float:left" label="Cadastrar novo"></a>
+          </div>
+        </p-footer>
+      </p-dataTable>
+    </div>
+  </div>
+</div>
+

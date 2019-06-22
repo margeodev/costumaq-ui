@@ -1,0 +1,63 @@
+<div class="container">
+  <form #addOSForm="ngForm" autocomplete="off" (ngSubmit)="salvar(addOSForm)">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>Nova Ordem de Serviço <i class="fa fa-pencil-square-o" aria-hidden="true"></i></h1>
+        <hr><br>
+      </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <!-- #################### FORMULARIO DE CADASTRO #################### -->
+        <p-panel header="Nova Ordem de Servico">
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-8 ui-fluid">
+              <label>Cliente</label>
+              <p-dropdown [options]="clientes" placeholder="Selecione" [autoWidth]="false"
+                filter="true" [(ngModel)]="ordemServico.cliente.id" name="cliente"
+                required="true"></p-dropdown>
+            </div>
+
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+              <label>Equipamento</label>
+              <p-dropdown [options]="equipamentos" required placeholder="Selecione" [autoWidth]="false"
+                [(ngModel)]="ordemServico.equipamento.id" name="equipamento" filter="true"></p-dropdown>
+            </div>
+
+            <div class="ui-g-12 ui-md-5 ui-fluid">
+              <label>Data de Entrada</label>
+              <p-calendar name="dataEntrada" dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false"
+              required [(ngModel)]="ordemServico.dataEntrada" ngModel #dataEntrada="ngModel"></p-calendar>
+
+              <app-message [control]="dataEntrada" error="required" text="Informe a data de entrada">
+              </app-message>
+            </div>
+
+            <div class="ui-g-8 ui-fluid">
+              <label>Descrição do Problema</label>
+              <textarea pInputTextarea rows="5" maxlength="900" name="descricaoProblema"
+                [(ngModel)]="ordemServico.descricaoProblema"
+                  oninput="this.value = this.value.toUpperCase()"></textarea>
+            </div>
+
+            <div class="ui-g-4 ui-fluid">
+              <label>Observações sobre o Equipamento</label>
+              <textarea pInputTextarea rows="5" maxlength="900" name="observacaoEquipamento"
+              [(ngModel)]="ordemServico.observacaoEquipamento"
+                oninput="this.value = this.value.toUpperCase()"></textarea>
+            </div>
+
+          </div>
+        </p-panel>
+      </div>
+
+    <!-- ############## Botão Salvar ordem de serviço ############## -->
+    <div class="ui-g-12">
+      <button icon="fa fa-save" pButton label="Salvar" [disabled]="!addOSForm.valid"></button>
+      <a routerLink="/servicos">Ir para Listagem de Serviços</a>
+    </div>
+    </div>
+  </form>
+</div>
+

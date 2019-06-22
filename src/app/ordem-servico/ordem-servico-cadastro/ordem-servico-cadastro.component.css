@@ -1,0 +1,8 @@
+:host >>> .ui-widget-header {
+  color: #576b80;
+  font-weight: bold;
+}
+
+textarea {
+  resize: none;
+}

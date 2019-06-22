@@ -1,0 +1,95 @@
+.navbar {
+  background-image: linear-gradient(to right top, #2a343d, #2e3842, #323d47, #43505e, #4d5c6b);
+}
+
+.logo {
+  max-width: 200px;
+  max-height: 150px;
+  width: auto;
+  height: auto;
+  opacity:0.90;
+	-moz-opacity: 0.90;
+	filter: alpha(opacity=90);
+}
+
+:host >>> .ui-sidebar-right {
+  background-color: #3a3633;
+  border: none;
+}
+
+/* reset our lists to remove bullet points and padding */
+.mainmenu, .submenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mainmenu a {
+  display: block;
+  background-color: #3a3633;
+  text-decoration: none;
+  padding: 15px;
+  color: #c0bbb7;
+  margin-bottom: 3px;
+  padding-left: 30px;
+}
+
+/* add hover behaviour */
+.mainmenu a:hover {
+  background-color: #494541;
+}
+
+.mainmenu li:hover .submenu {
+  display: block;
+  max-height: 200px;
+}
+
+.submenu a {
+  background-color: #615b55;
+  padding-left: 50px;
+}
+
+.submenu a:hover {
+  background-color: #666;
+}
+
+.submenu {
+  overflow: hidden;
+  max-height: 0;
+  -webkit-transition: all 0.5s ease-out;
+}
+
+:host >>> .ui-sidebar {
+  padding: 0;
+}
+
+@media print{
+  .doNotPrint{display:none !important;}
+}
+
+.fa {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: 15px;
+  color: #eeeeee;
+}
+.fa:hover {
+  cursor: pointer;
+}
+
+.usuario-logado {
+  color: #eee;
+  display: flex;
+  margin-top: 15px;
+}
+
+.navbar-usuario {
+  /* padding: 15px; */
+  margin-bottom: 15px;
+  border-bottom: 1px solid #525151;
+
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #fff;
+}

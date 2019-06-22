@@ -1,0 +1,152 @@
+<div class="container">
+  <form #clienteForm="ngForm" autocomplete="off" (ngSubmit)="salvar(clienteForm)">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>{{ editando ? 'Edição de' : 'Novo'}} Cliente <i class="fa fa-user" aria-hidden="true"></i></h1>
+        <hr><br>
+      </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <!-- #################### DADOS PESSOAIS #################### -->
+        <p-panel header="Dados Pessoais">
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-8 ui-fluid">
+              <label>Nome</label>
+              <input type="text" pInputText name="nome" [(ngModel)]="cliente.nome" #nome="ngModel" required
+                minlength="5" oninput="this.value = this.value.toUpperCase()">
+
+              <app-message [control]="nome" error="required" text="Informe o Nome completo"></app-message>
+            </div>
+
+            <!-- #################### CPF / CNPJ #################### -->
+            <div class="ui-g-12 ui-md-4 ui-fluid" *ngIf="pessoaFisica">
+              <label>CPF</label>
+              <input pInputText name="cpf" [(ngModel)]="cliente.cpf" #cpf="ngModel" required
+                [textMask]="{mask: cpfMask}">
+
+              <app-message [control]="cpf" error="required" text="Informe o CPF"></app-message>
+            </div>
+
+            <div class="ui-g-12 ui-md-4 ui-fluid" *ngIf="!pessoaFisica">
+              <label>CNPJ</label>
+              <input name="cnpj" [(ngModel)]="cliente.cnpj" #cnpj="ngModel" required [textMask]="{mask: cnpjMask}"
+                pInputText>
+
+              <app-message [control]="cnpj" error="required" text="Informe o CNPJ"></app-message>
+            </div>
+
+            <!-- #################### TELEFONE / WHATSAPP #################### -->
+            <div class="ui-g-6 ui-md-3 ui-fluid">
+              <label>Telefone <i class="fa fa-phone" aria-hidden="true"></i></label>
+              <input name="telefone" [(ngModel)]="cliente.telefone" #telefone="ngModel" required
+                [textMask]="{mask: telMask}" pInputText (blur)="formataTelefone($event)">
+
+              <app-message [control]="telefone" error="required" text="Informe o Telefone"></app-message>
+            </div>
+
+            <div class="ui-g-6 ui-md-3 ui-fluid">
+              <label>WhatsApp <i class="fa fa-whatsapp" aria-hidden="true"></i></label>
+              <div class="ui-inputgroup">
+                <input pInputText name="whatsapp" [(ngModel)]="cliente.whatsapp" [textMask]="{mask: telMask}"
+                  #whatsapp="ngModel" (blur)="formataTelefone($event)">
+
+                <button pButton type="button" icon="fa fa-clone" class="ui-button-success" (click)="copiarTelefone()"
+                  pTooltip="Copiar telefone" tooltipPosition="top"></button>
+              </div>
+            </div>
+
+            <!-- #################### EMAIL #################### -->
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+              <label>Email <i class="fa fa-envelope-o" aria-hidden="true"></i></label>
+              <input type="text" pInputText name="email" [(ngModel)]="cliente.email" #email="ngModel">
+            </div>
+
+            <!-- #################### RADIO BUTTONS #################### -->
+            <div class="ui-g-12 ui-fluid">
+              <div class="ui-g" style="width:250px;margin-bottom:10px">
+                <div style="margin-bottom:10px">
+                  <p-radioButton name="group2" value="PESSOA_FISICA" label="Pessoa Física" inputId="preopt1"
+                    [(ngModel)]="cliente.tipoCliente" (click)="exibePessoaFisica()" required>
+                  </p-radioButton>
+                </div>
+                <div>
+                  <p-radioButton name="group2" value="PESSOA_JURIDICA" label="Pessoa Juridica"
+                    [(ngModel)]="cliente.tipoCliente" inputId="preopt2" (click)="exibePessoaJuridica()">
+                  </p-radioButton>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </p-panel>
+      </div>
+    </div>
+
+    <!-- #################### endereço #################### -->
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-panel header="Endereço">
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-9 ui-fluid">
+              <label>Rua</label>
+              <input type="text" pInputText name="logradouro" ngModel #logradouro="ngModel"
+                [(ngModel)]="cliente.endereco.logradouro" required>
+              <app-message [control]="logradouro" error="required" text="Informe a rua"></app-message>
+            </div>
+
+            <div class="ui-g-6 ui-md-3 ui-fluid">
+              <label>Número</label>
+              <input type="text" pInputText name="numero" required #numero="ngModel" [(ngModel)]="cliente.endereco.numero">
+
+              <app-message [control]="numero" error="required" text="Informe o Número"></app-message>
+            </div>
+
+            <div class="ui-g-6 ui-md-4 ui-fluid">
+              <label>CEP</label>
+              <input pInputText name="cep" [(ngModel)]="cliente.endereco.cep" [textMask]="{mask: cepMask}"
+                #cep="ngModel" required (blur)="consultarCEP($event.target.value)">
+
+              <app-message [control]="cep" error="required" text="Informe o CEP"></app-message>
+            </div>
+
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+              <label>Bairro</label>
+              <input type="text" pInputText required name="bairro" #bairro="ngModel" [(ngModel)]="cliente.endereco.bairro">
+
+              <app-message [control]="bairro" error="required" text="Informe o Bairro"></app-message>
+            </div>
+
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+              <label>Complemento</label>
+              <input type="text" pInputText name="complemento" [(ngModel)]="cliente.endereco.complemento"
+                #complemento="ngModel">
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+              <label>Cidade</label>
+              <input type="text" pInputText required name="localidade" #localidade="ngModel" [(ngModel)]="cliente.endereco.localidade">
+
+              <app-message [control]="localidade" error="required" text="Informe a Cidade"></app-message>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+              <label>Estado</label>
+              <input type="text" pInputText required name="uf" #uf="ngModel" [(ngModel)]="cliente.endereco.uf">
+
+              <app-message [control]="uf" error="required" text="Informe o Estado"></app-message>
+            </div>
+
+          </div>
+        </p-panel>
+      </div>
+    </div>
+
+    <!-- ############## Botão Salvar cliente ############## -->
+    <div class="ui-g-12">
+      <button icon="fa fa-save" pButton label="{{ editando ? 'Salvar alterações' : 'Adicionar'}}" [disabled]="!clienteForm.valid"></button>
+      <a routerLink="/ordem-servico-cadastro">Ir para cadastro de Ordem de Serviço</a>
+    </div>
+  </form>
+</div>

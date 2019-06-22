@@ -1,0 +1,15 @@
+@media print{
+  .doNotPrint{display:none !important;}
+}
+
+:host >>> .ui-state-default {
+  border: 1px #d6d6d6;
+  background: #ffffff;
+  color: #555555;
+}
+
+:host >>>  .ui-state-default, .ui-state-disabled, .ui-widget:disabled {
+  opacity: 1 !important;
+  background-image: none;
+  cursor: default !important;
+}

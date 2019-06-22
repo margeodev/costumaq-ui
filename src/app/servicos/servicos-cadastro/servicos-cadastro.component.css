@@ -1,0 +1,22 @@
+textarea {
+  resize: none;
+}
+
+:host >>> .ui-state-disabled, .ui-widget:disabled {
+  opacity: 0.75;
+  font-weight: default !important;
+}
+
+.autorizado {
+  border-radius: 3px;
+  background: rgb(13, 248, 72);
+}
+.nao-autorizado {
+  border-radius: 3px;
+  background: rgb(248, 80, 13);
+}
+.nao-autorizado >>> label.ui-radiobutton-label{
+ color: #fff;
+}
+
+

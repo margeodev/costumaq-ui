@@ -1,0 +1,13 @@
+.mainHeader {
+  color: #576b80;
+  font-weight: bold;
+  text-align: left;
+}
+
+:host >>> .ui-datagrid-header {
+  text-align: left;
+}
+
+/* :host >>> .ui-widget-content.card-servico {
+  background: rgb(227, 241, 255);
+} */

@@ -1,0 +1,54 @@
+<div class="container">
+  <form #equipamentoForm="ngForm" autocomplete="off" (ngSubmit)="salvar(equipamentoForm)">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>{{ editando ? 'Editar' : 'Novo'}} Equipamento <i class="fa fa-gear" aria-hidden="true"></i></h1>
+        <hr><br>
+      </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <!-- #################### DADOS DO EQUIPAMENTO #################### -->
+        <p-panel header="Dados do Equipamento">
+
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+              <label>Número de série</label>
+              <input type="text" pInputText name="numeroSerie" [(ngModel)]="equipamento.numeroSerie"
+                #numeroSerie="ngModel" required minlength="3" oninput="this.value = this.value.toUpperCase()">
+
+              <app-message [control]="numeroSerie" error="required" text="Informe o número de série"></app-message>
+            </div>
+          </div>
+
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+              <label>Modelo</label>
+              <input type="text" pInputText name="modelo" [(ngModel)]="equipamento.modelo" #modelo="ngModel" required
+                minlength="3" oninput="this.value = this.value.toUpperCase()">
+
+              <app-message [control]="modelo" error="required" text="Informe o modelo"></app-message>
+            </div>
+          </div>
+
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+              <label>Fabricante</label>
+              <input type="text" pInputText name="fabricante" [(ngModel)]="equipamento.fabricante"
+                #fabricante="ngModel" oninput="this.value = this.value.toUpperCase()">
+            </div>
+          </div>
+
+        </p-panel>
+      </div>
+    </div>
+
+    <!-- ############## Botão Salvar equipamento ############## -->
+    <div class="ui-g-12">
+      <button icon="fa fa-save" pButton label="{{ editando ? 'Salvar alterações' : 'Adicionar'}}"
+        [disabled]="!equipamentoForm.valid"></button>
+      <a routerLink="/ordem-servico-cadastro">Ir para cadastro de Ordem de Serviço</a>
+    </div>
+  </form>
+</div>

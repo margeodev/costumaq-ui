@@ -1,0 +1,82 @@
+<div class="container">
+
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1>Detalhes do Cliente <i class="fa fa-user" aria-hidden="true"></i></h1>
+      <hr><br>
+    </div>
+  </div>
+
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <!-- #################### DADOS PESSOAIS #################### -->
+      <p-panel header="Dados do Cliente">
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-6">
+            <div class="ui-g-12 ui-fluid">
+              <label>Nome: </label>{{cliente.nome}}
+            </div>
+
+            <!-- #################### CPF / CNPJ #################### -->
+            <div class="ui-g-12 ui-fluid" *ngIf="pessoaFisica">
+              <label>CPF: </label>{{cliente.cpf}}
+            </div>
+
+            <div class="ui-g-12 ui-fluid " *ngIf="!pessoaFisica">
+              <label>CNPJ: </label>{{cliente.cnpj}}
+            </div>
+
+            <!-- #################### TELEFONE / WHATSAPP #################### -->
+            <div class="ui-g-12 ui-fluid">
+              <label>Telefone: </label>{{cliente.telefone}}
+            </div>
+
+            <div class="ui-g-12 ui-fluid">
+              <label>WhatsApp: </label>{{cliente.whatsapp}}
+            </div>
+
+            <!-- #################### EMAIL #################### -->
+            <div class="ui-g-12 ui-fluid">
+              <label>Email: </label>{{cliente.email}}
+            </div>
+          </div>
+
+          <div class="ui-g-12 ui-md-6">
+            <div class="ui-g-12 ui-fluid">
+              <label>Rua: </label>{{cliente.endereco.logradouro}}
+            </div>
+
+            <div class="ui-g-12 ui-fluid">
+              <label>Bairro: </label>{{cliente.endereco.bairro}}
+            </div>
+
+            <div class="ui-g-3 ui-fluid">
+              <label>CEP: </label>{{cliente.endereco.cep}}
+            </div>
+
+            <div class="ui-g-3 ui-fluid">
+              <label>Número: </label>{{cliente.endereco.numero}}
+            </div>
+
+            <div class="ui-g-12 ui-fluid" *ngIf="cliente.endereco.complemento">
+              <label>Complemento: </label>{{cliente.endereco.complemento}}
+            </div>
+
+            <div class="ui-g-12 ui-fluid">
+              <label>Cidade: </label>{{cliente.endereco.localidade}}
+            </div>
+
+            <div class="ui-g-12 ui-fluid">
+              <label>Estado: </label>{{cliente.endereco.uf}}
+            </div>
+          </div>
+        </div>
+
+      </p-panel>
+    </div>
+  </div>
+  <div class="ui-g-12">
+    <a routerLink="/clientes">Voltar para listagem de clientes</a>
+  </div>
+
+</div>

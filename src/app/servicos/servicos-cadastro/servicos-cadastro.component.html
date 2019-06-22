@@ -1,0 +1,150 @@
+<div class="container">
+  <form #addServForm="ngForm" autocomplete="off">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>Novo Serviço <a (click)="editaServico()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></h1>
+        <hr><br>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <p-panel styleClass="margin:15px">
+        <p-header>
+          <div class="ui-g-6">
+            Ordem de Servico Nº {{servico.ordemServico.codigo}}
+          </div>
+
+          <div class="ui-g-6" style="text-align: right">
+            <button icon="fa fa-print" pButton label="Imprimir" [disabled]="!servico.concluido"
+              [routerLink]="['/servico-impressao', servico.id]"></button>
+
+          </div>
+        </p-header>
+
+        <div class="ui-g">
+          <div class="ui-g-12">
+            <label>Cliente:</label> {{servico.ordemServico.cliente.nome}}
+          </div>
+          <div class="ui-g-12">
+            <label>Telefone:</label> {{servico.ordemServico.cliente.telefone}}
+          </div>
+          <div class="ui-g-12" *ngIf="whatsApp">
+            <label>WhatsApp:</label> {{servico.ordemServico.cliente.whatsapp}}
+          </div>
+
+
+          <div class="ui-g-12 ui-fluid">
+            <label>Descrição de Entrada: </label>
+            <div style="border: 1px solid #D6D6D6; border-radius:3px; padding: 10px">
+              {{servico.ordemServico.descricaoProblema}}
+            </div>
+          </div>
+
+          <div class="ui-g-12">
+            <hr class="ui-widget-content" style="border-top:0">
+          </div>
+
+          <!-- #################### DADOS DO SERVICO #################### -->
+          <div class="ui-g-12 ui-md-4 ui-fluid">
+            <label>Mecanico <i *ngIf="mecanicoDefinido" class="fa fa-lock" aria-hidden="true"></i></label>
+            <p-dropdown *ngIf="!mecanicoDefinido" [options]="mecanicos" placeholder="Selecione" [autoWidth]="false"
+              [(ngModel)]="servico.mecanico.id" name="mecanico" required></p-dropdown>
+
+            <div *ngIf="mecanicoDefinido" style="border: 1px solid #D6D6D6; border-radius:3px; padding: 4px">
+              {{mecanico.nome}}
+            </div>
+          </div>
+
+          <div class="ui-g-12 ui-md-4 ui-fluid">
+            <label>Tipo de Serviço <i *ngIf="tipoServicoDefinido" class="fa fa-lock" aria-hidden="true"></i></label>
+            <p-dropdown [options]="tipoServico" placeholder="Selecione" [autoWidth]="false" name="tipoServico" required
+              [(ngModel)]="servico.tipoServico" *ngIf="!tipoServicoDefinido"></p-dropdown>
+
+            <div *ngIf="tipoServicoDefinido" style="border: 1px solid #D6D6D6; border-radius:3px; padding: 4px">
+              {{servico.tipoServico === 'MANUTENCAO_CORRETIVA' ? 'MANUTENÇÃO CORRETIVA' : 'MANUTENÇÃO CORRETIVA'}}
+            </div>
+          </div>
+
+          <div class="ui-g-12 ui-md-4 ui-fluid">
+            <label>Valor Total <i *ngIf="valorDefinido" class="fa fa-lock" aria-hidden="true"></i></label>
+            <input pInputText type="text" placeholder="0,00" currencyMask name="valor" [(ngModel)]="servico.valor"
+              [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }" *ngIf="!valorDefinido"
+              required>
+
+            <div *ngIf="valorDefinido" style="border: 1px solid #D6D6D6; border-radius:3px; padding: 4px">
+              R$ {{servico.valor}}
+            </div>
+          </div>
+
+          <div class="ui-g-12 ui-md-8 ui-fluid">
+            <label>Descrição do Serviço <i *ngIf="descricaoDefinida" class="fa fa-lock" aria-hidden="true"></i></label>
+            <textarea pInputTextarea rows="5" maxlength="900" name="descricao" [(ngModel)]="servico.descricao"
+              *ngIf="!descricaoDefinida" required oninput="this.value = this.value.toUpperCase()"></textarea>
+
+            <textarea pInputTextarea rows="5" maxlength="900" name="descricao" value={{servico.descricao}} disabled
+              *ngIf="descricaoDefinida"></textarea>
+
+          </div>
+
+          <div class="ui-g-12 ui-md-4 ui-fluid">
+            <label>Status do Serviço <i *ngIf="statusDefinido" class="fa fa-lock" aria-hidden="true"></i></label>
+
+            <div style="border: 1px solid #D6D6D6; border-radius:3px; padding: 10px" *ngIf="statusDefinido">
+              <div class="ui-g" style="width:250px;margin-bottom:10px">
+                <div class="ui-g-12 {{ servico.statusServico === 'AUTORIZADO' ? 'autorizado' : ''}}">
+                  <p-radioButton [disabled]="true" label="Autorizado">
+                  </p-radioButton>
+                </div>
+                <div class="ui-g-12 {{ servico.statusServico === 'NAO_AUTORIZADO' ? 'nao-autorizado' : ''}}">
+                  <p-radioButton [disabled]="true" label="Não autorizado">
+                  </p-radioButton>
+                </div>
+              </div>
+            </div>
+            <div style="border: 1px solid #D6D6D6; border-radius:3px; padding: 10px" *ngIf="!statusDefinido">
+              <div class="ui-g" style="width:250px;margin-bottom:10px">
+                <div class="ui-g-12">
+                  <p-radioButton name="group1" value="AUTORIZADO" label="Autorizado" [(ngModel)]="servico.statusServico"
+                    inputId="opt1">
+                  </p-radioButton>
+                </div>
+                <div class="ui-g-12">
+                  <p-radioButton name="group1" value="NAO_AUTORIZADO" label="Não autorizado"
+                    [(ngModel)]="servico.statusServico" inputId="opt2">
+                  </p-radioButton>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ui-g-12">
+            <hr class="ui-widget-content" style="border-top:0">
+          </div>
+
+          <div class="ui-g-12 ui-md-4 ui-fluid">
+            <label>Data de Entrega</label>
+            <p-calendar name="dataEntrega" dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false"
+              [(ngModel)]="servico.dataEntrega" ngModel #dataEntrega="ngModel"></p-calendar>
+          </div>
+
+          <div class="ui-g-12 ui-md-4 ui-fluid">
+            <label>Garantia</label>
+            <p-dropdown [options]="prazoGarantia" placeholder="Selecione" [autoWidth]="false" name="dataGarantia"
+              (onChange)="definePrazoDeGarantia($event.value)" [disabled]="!servico.dataEntrega">
+            </p-dropdown>
+          </div>
+
+        </div>
+      </p-panel>
+    </div>
+
+
+    <!-- ############## BOTÃO SALVAR SERVIÇO ############## -->
+
+    <div class="ui-g-12">
+      <button icon="fa fa-save" pButton (click)="salvar()" label="Salvar" [disabled]="!addServForm.valid"></button>
+      <a routerLink="/servicos">Ir para Listagem de Serviços</a>
+    </div>
+
+  </form>
+</div>

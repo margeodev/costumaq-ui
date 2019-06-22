@@ -1,0 +1,82 @@
+<div class="container">
+  <form #pesquisaEquipamentoForm="ngForm" autocomplete="off" (ngSubmit)="pesquisar()">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>Pesquisar Equipamento <i class="fa fa-search" aria-hidden="true"></i></h1>
+        <hr><br>
+      </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <!-- #################### FORMULARIO DE PEQUISA #################### -->
+        <p-panel header="Pesquise usando os filtros">
+
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+              <label>Número de série</label>
+              <input type="text" pInputText name="numeroSerie"
+                oninput="this.value = this.value.toUpperCase()" [(ngModel)]="filtro.numeroSerie">
+            </div>
+          </div>
+
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+              <label>Modelo</label>
+              <input type="text" pInputText name="modelo" [(ngModel)]="filtro.modelo"
+              oninput="this.value = this.value.toUpperCase()">
+            </div>
+          </div>
+
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+              <label>Fabricante</label>
+              <input type="text" pInputText name="fabricante" [(ngModel)]="filtro.fabricante"
+              oninput="this.value = this.value.toUpperCase()">
+            </div>
+          </div>
+
+        </p-panel>
+
+      </div>
+      <div class="ui-g-12 ui-md-2 ui-fluid">
+        <button icon="fa fa-search" pButton label="Pesquisar"></button>
+      </div>
+    </div>
+  </form>
+
+  <!-- #################### TABELA DE EQUIPAMENTOS #################### -->
+  <div class="ui-g" style="margin-top: 20px">
+    <div class="ui-g-12">
+      <p-dataTable [value]="equipamentos" emptyMessage="Nenhum equipamento encontrado."
+        paginator="true"
+        [rows]="filtro.itensPorPagina"
+        [lazy]="true"
+        [totalRecords]="totalRegistros"
+        (onLazyLoad)="aoMudarPagina($event)"
+        #tabela>
+        <p-column styleClass="col-id" field="id" header="ID"></p-column>
+        <p-column field="numeroSerie" header="Número de Série"></p-column>
+        <p-column field="modelo" header="Modelo"></p-column>
+        <p-column field="fabricante" header="Fabricante"></p-column>
+
+        <p-column styleClass="col-acoes">
+            <ng-template pTemplate="body" let-cli="rowData">
+              <a pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"
+                [routerLink]="['/equipamentos', cli.id]"></a>
+              <button (click)="confirmarExclusao(cli)" pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+            </ng-template>
+        </p-column>
+
+        <p-footer>
+          <div class="ui-helper-clearfix" style="width:100%">
+            <a pButton icon="fa-plus" routerLink="/equipamentos/novo" style="float:left" label="Adicionar novo"></a>
+          </div>
+        </p-footer>
+      </p-dataTable>
+    </div>
+  </div>
+</div>
+
+
+
