@@ -1,0 +1,54 @@
+<!-- ####################### TABELA DE ITENS  ####################### -->
+<p-dataTable [(value)]="itens" emptyMessage="Nenhum item adicionado">
+  <p-column field="descricao" header="Itens do Serviço"></p-column>
+  <p-column styleClass="col-num" field="valor" header="Valor">
+    <ng-template let-serv="rowData" pTemplate="body">
+      <span>{{ serv.valor | number:'1.2-2' }}</span>
+    </ng-template>
+  </p-column>
+
+  <p-column styleClass="col-acoes">
+      <ng-template pTemplate="body" let-item="rowData">
+
+        <a pTooltip="Excluir Item" tooltipPosition="top" (click)="delete(item)"><i class="fa fa-trash"></i></a>
+
+      </ng-template>
+  </p-column>
+  <p-footer>
+    <div class="ui-helper-clearfix" style="width:20%">
+      <button type="button" pButton icon="fa-plus" style="float:left" (click)="exibeMenuAdicionarItem()"
+        label="Add"></button>
+    </div>
+  </p-footer>
+</p-dataTable>
+
+<!-- ####################### MODAL DE CADASTRO DE ITENS  ####################### -->
+<p-dialog header="Detalhes do Item" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+  <form #addItemForm="ngForm" autocomplete="off">
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+
+      <div class="ui-grid-row" style="margin-bottom: 10px">
+        <div class="ui-grid-col-4"><label for="descricao">Descrição</label></div>
+        <div class="ui-grid-col-8"><input pInputText id="descricao" name="descricao" [(ngModel)]="item.descricao"
+            required pattern=".*\S+.*" oninput="this.value = this.value.toUpperCase()"/>
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-4"><label for="valor">Valor</label></div>
+        <div class="ui-grid-col-8">
+          <input pInputText id="valor" type="text" placeholder="0,00" currencyMask name="valor" [(ngModel)]="item.valor"
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }" required>
+        </div>
+      </div>
+
+    </div>
+
+    <p-footer>
+      <div class="ui-grid-col-12" style="margin-top: 20px">
+        <button type="button" [disabled]="!addItemForm.valid" pButton icon="fa-check" (click)="adicionarItem()"
+          label="Salvar"></button>
+      </div>
+    </p-footer>
+  </form>
+</p-dialog>

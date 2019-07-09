@@ -66,23 +66,16 @@
           </div>
 
           <div class="ui-g-12 ui-md-4 ui-fluid">
-            <label>Valor Total <i *ngIf="valorDefinido" class="fa fa-lock" aria-hidden="true"></i></label>
-            <input pInputText type="text" placeholder="0,00" currencyMask name="valor" [(ngModel)]="servico.valor"
-              [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }" *ngIf="!valorDefinido"
-              required>
-
-            <div *ngIf="valorDefinido" style="border: 1px solid #D6D6D6; border-radius:3px; padding: 4px">
-              R$ {{servico.valor}}
+            <label>Valor Total</label>
+            <div style="border: 1px solid #D6D6D6; border-radius:3px; padding: 4px">
+              <span>R$ {{ valorTotal | number:'1.2-2' }}</span>
             </div>
           </div>
 
           <div class="ui-g-12 ui-md-8 ui-fluid">
             <label>Descrição do Serviço <i *ngIf="descricaoDefinida" class="fa fa-lock" aria-hidden="true"></i></label>
-            <textarea pInputTextarea rows="5" maxlength="900" name="descricao" [(ngModel)]="servico.descricao"
-              *ngIf="!descricaoDefinida" required oninput="this.value = this.value.toUpperCase()"></textarea>
 
-            <textarea pInputTextarea rows="5" maxlength="900" name="descricao" value={{servico.descricao}} disabled
-              *ngIf="descricaoDefinida"></textarea>
+            <app-item [itens]="servico.itens" (alterarItensEvento)="aoAlterarItem($event)"></app-item>
 
           </div>
 
@@ -138,9 +131,7 @@
       </p-panel>
     </div>
 
-
     <!-- ############## BOTÃO SALVAR SERVIÇO ############## -->
-
     <div class="ui-g-12">
       <button icon="fa fa-save" pButton (click)="salvar()" label="Salvar" [disabled]="!addServForm.valid"></button>
       <a routerLink="/servicos">Ir para Listagem de Serviços</a>

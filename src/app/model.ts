@@ -47,14 +47,33 @@ export class ServicoResumo {
 }
 
 
+// export class Servico {
+//   id: number;
+//   ordemServico = new OrdemServico();
+//   mecanico = new Mecanico();
+//   tipoServico: null;
+//   valor: number;
+//   statusServico: 'NAO_DEFINIDO';
+//   descricao: string;
+//   dataEntrega: Date;
+//   dataGarantia: Date;
+//   concluido: boolean;
+// }
+
+export class Item {
+  descricao: string;
+  valor: number;
+}
+
 export class Servico {
   id: number;
+  valor: number;
+  descricao: string;
   ordemServico = new OrdemServico();
   mecanico = new Mecanico();
   tipoServico: null;
-  valor: number;
   statusServico: 'NAO_DEFINIDO';
-  descricao: string;
+  itens = [];
   dataEntrega: Date;
   dataGarantia: Date;
   concluido: boolean;

@@ -17,10 +17,12 @@ import { DropdownModule } from 'primeng/components/dropdown/dropdown';
 import { InputTextareaModule } from 'primeng/components/inputtextarea/inputtextarea';
 import { InputTextModule } from 'primeng/components/inputtext/inputtext';
 import { PanelModule } from 'primeng/components/panel/panel';
+import { DialogModule } from 'primeng/components/dialog/dialog';
 import { RadioButtonModule } from 'primeng/components/radiobutton/radiobutton';
 import { ServicoImpressaoComponent } from './servico-impressao/servico-impressao.component';
 import { ServicoHistoricoComponent } from './servico-historico/servico-historico.component';
 import { ServicosConcluidosComponent } from './servicos-concluidos/servicos-concluidos.component';
+import { ItemComponent } from './item/item.component';
 
 @NgModule({
   imports: [
@@ -32,6 +34,7 @@ import { ServicosConcluidosComponent } from './servicos-concluidos/servicos-conc
     CurrencyMaskModule,
     DataGridModule,
     DataTableModule,
+    DialogModule,
     DropdownModule,
     FormsModule,
     InputTextareaModule,
@@ -46,7 +49,11 @@ import { ServicosConcluidosComponent } from './servicos-concluidos/servicos-conc
     ServicosCadastroComponent,
     ServicoImpressaoComponent,
     ServicoHistoricoComponent,
-    ServicosConcluidosComponent
+    ServicosConcluidosComponent,
+    ItemComponent
+  ],
+  exports: [
+    ItemComponent
   ]
 })
 export class ServicosModule { }

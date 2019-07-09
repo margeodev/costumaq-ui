@@ -14,22 +14,16 @@
         (onLazyLoad)="aoMudarPagina($event)" #tabela>
         <p-column field="ordemServico.cliente.nome" header="Cliente"></p-column>
         <p-column styleClass="col-num" field="ordemServico.equipamento.numeroSerie" header="Número de Série"></p-column>
-        <p-column field="descricao" header="Descrição"></p-column>
+        <!-- <p-column field="descricao" header="Descrição"></p-column> -->
         <p-column styleClass="col-num" field="mecanico.nome" header="Mecânico"></p-column>
         <p-column header="Data da Garantia" styleClass="col-num">
           <ng-template let-serv="rowData" pTemplate="body">
             <span>{{ serv.dataGarantia | date:'dd/MM/yyyy' }}</span>
           </ng-template>
         </p-column>
-        <p-column styleClass="col-valor" field="valor" header="Valor">
-          <ng-template let-serv="rowData" pTemplate="body">
-            <span>{{ serv.valor | number:'1.2-2' }}</span>
-          </ng-template>
-        </p-column>
 
         <p-column styleClass="col-num">
           <ng-template pTemplate="body" let-serv="rowData">
-            <!-- <a [routerLink]="['/clientes', cli.id]">Imprimir</a> -->
             <button pButton label="Imprimir" [routerLink]="['/servico-impressao', serv.id]"></button>
           </ng-template>
         </p-column>

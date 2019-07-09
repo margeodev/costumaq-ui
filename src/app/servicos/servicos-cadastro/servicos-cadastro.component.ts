@@ -1,7 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Servico, Mecanico } from 'app/model';
+import { Servico, Mecanico, Item } from 'app/model';
 import { ErrorHandlerService } from 'app/core/error-handler.service';
 import { MecanicoService } from 'app/mecanicos/mecanico.service';
 import { ServicoService } from '../servico.service';
@@ -26,6 +25,7 @@ export class ServicosCadastroComponent implements OnInit {
   descricaoDefinida = false;
   dataEntregaDefinida = false;
   dataGarantiaDefinida = false;
+  valorTotal: number;
 
   tipoServico = [
     { label: 'MANUTENCÃO PREVENTIVA', value: 'MANUTENCAO_PREVENTIVA' },
@@ -91,15 +91,31 @@ export class ServicosCadastroComponent implements OnInit {
     this.servico.concluido = servico.concluido;
     this.servico.dataEntrega = servico.dataEntrega;
 
+    this.servico.itens = servico.itens;
     this.servico.ordemServico.codigo = servico.ordemServico.codigo;
     this.servico.ordemServico.cliente.nome = servico.ordemServico.cliente.nome;
     this.servico.ordemServico.cliente.telefone = servico.ordemServico.cliente.telefone;
     this.servico.ordemServico.cliente.whatsapp = servico.ordemServico.cliente.whatsapp;
     this.servico.ordemServico.descricaoProblema = servico.ordemServico.descricaoProblema;
+    this.calcularValorTotal();
 
     if (servico.mecanico) {
       this.servico.mecanico = servico.mecanico;
     }
+  }
+
+  aoAlterarItem(itensEvento: any) {
+    this.servico.itens = itensEvento;
+    this.calcularValorTotal();
+  }
+
+  calcularValorTotal() {
+    let itens = this.servico.itens;
+    let total = 0;
+    if(itens.length > 0) {
+      total = itens.reduce((sum, valorItem) => sum + valorItem.valor, 0);
+    }
+    this.valorTotal = total;
   }
 
   travaCamposEntradaDefinidos(servico: Servico) {
@@ -126,7 +142,7 @@ export class ServicosCadastroComponent implements OnInit {
 
 
   salvar() {
-    if(this.servico.dataEntrega) {
+    if (this.servico.dataEntrega) {
       this.servico.concluido = true;
     }
     this.atualizarServico();

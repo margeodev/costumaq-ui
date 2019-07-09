@@ -49,12 +49,20 @@
       <label>Descrição do serviço</label>
     </div>
 
-    <div class="ui-g-12">
-      <span>{{servico.descricao}}</span>
+    <div class="ui-g-8">
+        <p-dataTable [value]="servico.itens">
+            <p-column field="descricao" header="Descrição"></p-column>
+            <p-column styleClass="col-num" field="valor" header="Valor">
+                <ng-template let-serv="rowData" pTemplate="body">
+                  <span>{{ serv.valor | number:'1.2-2' }}</span>
+                </ng-template>
+              </p-column>
+        </p-dataTable>
+
     </div>
 
     <div class="ui-g-12">
-      <label>Valor Total: </label><span>R$ {{ servico.valor | number:'1.2-2' }}</span>
+      <label>Valor Total: </label><span>R$ {{ valorTotal | number:'1.2-2' }}</span>
 
     </div>
 

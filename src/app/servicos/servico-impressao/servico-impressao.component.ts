@@ -12,6 +12,7 @@ import { Servico } from 'app/model';
 export class ServicoImpressaoComponent implements OnInit {
 
   servico = new Servico();
+  valorTotal: number;
 
   constructor(
     private errorHandler: ErrorHandlerService,
@@ -28,10 +29,20 @@ export class ServicoImpressaoComponent implements OnInit {
     }
   }
 
+  calcularValorTotal() {
+    let itens = this.servico.itens;
+    let total = 0;
+    if(itens.length > 0) {
+      total = itens.reduce((sum, valorItem) => sum + valorItem.valor, 0);
+    }
+    this.valorTotal = total;
+  }
+
   carregarServicoPorId(id: number) {
     this.servicoService.buscarPorId(id)
       .then(response => {
         this.servico = response;
+        this.calcularValorTotal();
       })
       .catch(erro => {
         this.errorHandler.handle(erro);
