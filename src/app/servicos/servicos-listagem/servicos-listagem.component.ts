@@ -54,7 +54,11 @@ export class ServicosListagemComponent implements OnInit {
   preparaNomeParaExibicao(nomeCompleto: string) {
     const nome = nomeCompleto;
     const arrayNomes = nome.split(' ');
-    return arrayNomes[0] + ' ' + arrayNomes[1];
+    if(arrayNomes[1].length == 2) {
+      return arrayNomes[0] + ' ' + arrayNomes[1] + ' ' + arrayNomes[2];
+    } else {
+      return arrayNomes[0] + ' ' + arrayNomes[1];
+    }
   }
 
   imprimir() {

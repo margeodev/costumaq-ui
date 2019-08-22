@@ -13,6 +13,7 @@ export class ServicoImpressaoComponent implements OnInit {
 
   servico = new Servico();
   valorTotal: number;
+  nomeFormatado: string;
 
   constructor(
     private errorHandler: ErrorHandlerService,
@@ -42,12 +43,22 @@ export class ServicoImpressaoComponent implements OnInit {
     this.servicoService.buscarPorId(id)
       .then(response => {
         this.servico = response;
+        this.preparaNomeParaExibicao();
         this.calcularValorTotal();
       })
       .catch(erro => {
         this.errorHandler.handle(erro);
         this.router.navigate(['/pagina-nao-encontrada']);
       });
+  }
+
+  preparaNomeParaExibicao() {
+    const arrayNomes = this.servico.ordemServico.cliente.nome.split(' ');
+    if(arrayNomes[1].length == 2) {
+      this.nomeFormatado = arrayNomes[0] + ' ' + arrayNomes[1] + ' ' + arrayNomes[2];
+    } else {
+      this.nomeFormatado = arrayNomes[0] + ' ' + arrayNomes[1];
+    }
   }
 
   onPrint() {

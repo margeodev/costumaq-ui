@@ -1,82 +1,80 @@
 <div class="container">
-  <app-cabecalho-impressao></app-cabecalho-impressao>
-
   <div class="ui-g">
+
+    <div class="ui-g-12" style="margin-bottom: 0">
+      <app-cabecalho-impressao></app-cabecalho-impressao>
+    </div>
+
     <div class="ui-g-12">
-      <h3>COMPROVANTE DE ENTREGA DE EQUIPAMENTO</h3>
-      <hr><br>
+      <div class="ui-g-12" style="LINE-HEIGHT:5px;">
+        <h3>COMPROVANTE DE ENTREGA DE EQUIPAMENTO</h3>
+        <hr class="ui-widget-content" style="border-top:0">
+      </div>
+    </div>
+  </div>
+
+  <div class="ui-g" style="font-size: 15px; LINE-HEIGHT:5px;">
+    <div class="ui-g-6">
+
+      <div class="ui-g-12">
+        <label>Número O.S.: </label>{{servico.ordemServico.codigo}}
+      </div>
+
+      <div class="ui-g-12">
+        <label>Cliente: </label>{{nomeFormatado}}
+      </div>
+
+      <div class="ui-g-12" style="font-size: 16px; LINE-HEIGHT:15px;">
+        <label>Dados do Equipamento</label>
+      </div>
+
+      <div class="ui-g-12">
+        <label>Num. Série: </label><span>{{servico.ordemServico.equipamento.numeroSerie}}</span>
+      </div>
+
+      <div class="ui-g-12">
+        <label>Modelo: </label><span>{{servico.ordemServico.equipamento.modelo}}</span>
+      </div>
+
+      <div class="ui-g-12">
+        <label>Observação: </label><span>{{servico.ordemServico.observacaoEquipamento}}</span>
+      </div>
+
+      <div class="ui-g-12">
+        <label>Data de entrega: </label><span>{{servico.dataEntrega | date:"dd/MM/yyyy"}}</span>
+      </div>
+
+      <div class="ui-g-12">
+        <label>Data de garantia: </label><span>{{servico.dataGarantia | date:"dd/MM/yyyy"}}</span>
+      </div>
+
+    </div>
+
+    <div class="ui-g-6">
+
+      <div class="ui-g-12">
+        <label>Descrição do serviço</label>
+      </div>
+
+      <div class="ui-g-12" style="font-size: 14px; LINE-HEIGHT:15px;">
+        <p-dataTable [value]="servico.itens">
+          <p-column field="descricao" header="Descrição"></p-column>
+          <p-column styleClass="col-num" field="valor" header="Valor">
+            <ng-template let-serv="rowData" pTemplate="body">
+              <span>{{ serv.valor | number:'1.2-2' }}</span>
+            </ng-template>
+          </p-column>
+        </p-dataTable>
+      </div>
+
+      <div class="ui-g-12" style="text-align: right;">
+        <label>Valor Total: </label><span>R$ {{ valorTotal | number:'1.2-2' }}</span>
+      </div>
+
     </div>
   </div>
 
   <div class="ui-g">
-    <div class="ui-g-12">
-      <label>Código da ordem de serviço: </label>{{servico.ordemServico.codigo}}
-    </div>
-
-    <div class="ui-g-12">
-      <label>Cliente: </label>{{servico.ordemServico.cliente.nome}}
-    </div>
-
-    <div class="ui-g-12">
-      <label>Telefone: </label>{{servico.ordemServico.cliente.telefone}}
-    </div>
-
-    <div class="ui-g-12">
-      <hr class="ui-widget-content" style="border-top:0">
-    </div>
-
-    <div class="ui-g-12">
-      <label>Dados do Equipamento</label>
-    </div>
-
-    <div class="ui-g-12">
-      <label>Número de Série: </label><span>{{servico.ordemServico.equipamento.numeroSerie}}</span>
-    </div>
-
-    <div class="ui-g-12">
-      <label>Modelo: </label><span>{{servico.ordemServico.equipamento.modelo}}</span>
-    </div>
-
-    <div class="ui-g-12">
-      <label>Fabricante: </label><span>{{servico.ordemServico.equipamento.fabricante}}</span>
-    </div>
-
-    <div class="ui-g-12">
-      <hr class="ui-widget-content" style="border-top:0">
-    </div>
-
-    <div class="ui-g-12">
-      <label>Descrição do serviço</label>
-    </div>
-
-    <div class="ui-g-8">
-        <p-dataTable [value]="servico.itens">
-            <p-column field="descricao" header="Descrição"></p-column>
-            <p-column styleClass="col-num" field="valor" header="Valor">
-                <ng-template let-serv="rowData" pTemplate="body">
-                  <span>{{ serv.valor | number:'1.2-2' }}</span>
-                </ng-template>
-              </p-column>
-        </p-dataTable>
-
-    </div>
-
-    <div class="ui-g-12">
-      <label>Valor Total: </label><span>R$ {{ valorTotal | number:'1.2-2' }}</span>
-
-    </div>
-
-    <div class="ui-g-12">
-      <label>Data de entrega:</label>
-      <p-calendar name="dataEntrega" dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" disabled
-        [(ngModel)]="servico.dataEntrega" ngModel #dataEntrega="ngModel"></p-calendar>
-    </div>
-
-    <div class="ui-g-12" *ngIf="servico.dataGarantia">
-      <label>Data de garantia:</label>
-      <p-calendar name="dataGarantia" dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" disabled
-        [(ngModel)]="servico.dataGarantia" ngModel #dataGarantia="ngModel"></p-calendar>
-    </div>
 
     <div class="ui-g-12">
       <app-assinaturas></app-assinaturas>
@@ -89,7 +87,84 @@
       <a routerLink="/servicos">Ir para Listagem de Serviços</a>
     </div>
 
+  </div>
+  <br>
+  <hr style="border-top: dotted 3px;" />
+
+  <!-- ########## VIA DA EMPRESA ########## -->
+  <div class="ui-g">
+
     <div class="ui-g-12">
+      <div class="ui-g-12" style="LINE-HEIGHT:5px;">
+        <h3>COMPROVANTE DE ENTREGA DE EQUIPAMENTO</h3>
+        <hr class="ui-widget-content" style="border-top:0">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ui-g" style="font-size: 15px; LINE-HEIGHT:5px;">
+    <div class="ui-g-6">
+
+      <div class="ui-g-12">
+        <label>Número O.S.: </label>{{servico.ordemServico.codigo}}
+      </div>
+
+      <div class="ui-g-12">
+        <label>Cliente: </label>{{nomeFormatado}}
+      </div>
+
+      <div class="ui-g-12" style="font-size: 16px; LINE-HEIGHT:15px;">
+        <label>Dados do Equipamento</label>
+      </div>
+
+      <div class="ui-g-12">
+        <label>Num. Série: </label><span>{{servico.ordemServico.equipamento.numeroSerie}}</span>
+      </div>
+
+      <div class="ui-g-12">
+        <label>Modelo: </label><span>{{servico.ordemServico.equipamento.modelo}}</span>
+      </div>
+
+      <div class="ui-g-12">
+        <label>Observação: </label><span>{{servico.ordemServico.observacaoEquipamento}}</span>
+      </div>
+
+      <div class="ui-g-12">
+        <label>Data de entrega: </label><span>{{servico.dataEntrega | date:"dd/MM/yyyy"}}</span>
+      </div>
+
+      <div class="ui-g-12">
+        <label>Data de garantia: </label><span>{{servico.dataGarantia | date:"dd/MM/yyyy"}}</span>
+      </div>
+
+    </div>
+
+    <div class="ui-g-6">
+
+      <div class="ui-g-12">
+        <label>Descrição do serviço</label>
+      </div>
+
+      <div class="ui-g-12" style="font-size: 14px; LINE-HEIGHT:15px;">
+        <p-dataTable [value]="servico.itens">
+          <p-column field="descricao" header="Descrição"></p-column>
+          <p-column styleClass="col-num" field="valor" header="Valor">
+            <ng-template let-serv="rowData" pTemplate="body">
+              <span>{{ serv.valor | number:'1.2-2' }}</span>
+            </ng-template>
+          </p-column>
+        </p-dataTable>
+      </div>
+
+      <div class="ui-g-12" style="text-align: right;">
+        <label>Valor Total: </label><span>R$ {{ valorTotal | number:'1.2-2' }}</span>
+      </div>
+
+    </div>
+
+    <div class="ui-g-12">
+      <app-assinaturas></app-assinaturas>
     </div>
 
   </div>
